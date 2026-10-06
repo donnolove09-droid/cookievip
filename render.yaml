@@ -1,0 +1,71 @@
+services:
+  - type: web
+    name: cheatgameos-web
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: API_KEY
+        sync: false
+      - key: SECRET_KEY
+        generateValue: true
+      - key: TOKEN_TELEGRAM
+        sync: false
+      - key: TEN_BOT_TELEGRAM
+        value: CheatGameOS Bot
+      - key: USERNAME_BOT_TELEGRAM
+        value: cheatgameos_bot
+      - key: ALLOWED_IDS
+        sync: false
+      - key: SUPABASE_URL
+        sync: false
+      - key: SUPABASE_SERVICE_KEY
+        sync: false
+      - key: SUPABASE_ANON_KEY
+        sync: false
+      - key: WEB_URL
+        sync: false
+      - key: DEFAULT_MODE
+        value: auto
+      - key: ZIP_PASSWORD
+        value: cheatgame
+      - key: DATA_RETENTION_DAYS
+        value: "7"
+      - key: DOWNLOAD_TOKEN_TTL
+        value: "300"
+      - key: PLAYWRIGHT_HEADLESS
+        value: "true"
+      - key: PLAYWRIGHT_TIMEOUT
+        value: "60"
+      - key: ENABLE_FACEBOOK
+        value: "true"
+      - key: ENABLE_TIKTOK
+        value: "true"
+      - key: ENABLE_INSTAGRAM
+        value: "true"
+      - key: RATE_LIMIT_PER_DAY
+        value: "5"
+      - key: DEFAULT_PROXY
+        sync: false
+      - key: PORT
+        value: "8080"
+
+  - type: worker
+    name: cheatgameos-bot
+    runtime: python
+    plan: starter
+    buildCommand: pip install -r requirements.txt
+    startCommand: python bot.py
+    envVars:
+      - key: TOKEN_TELEGRAM
+        sync: false
+      - key: API_KEY
+        sync: false
+      - key: WEB_URL
+        sync: false
+      - key: ALLOWED_IDS
+        sync: false
+      - key: TEN_BOT_TELEGRAM
+        value: CheatGameOS Bot
+      - key: USERNAME_BOT_TELEGRAM
+        value: cheatgameos_bot
